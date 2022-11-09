@@ -40,11 +40,11 @@ PPL以外から出力された推論結果の取得方法は対象外となり�
 #### サポートしている言語について
 リポジトリに格納しているソースコードは、PythonとTypeScriptに対応しています。
 
-詳細は、 [「Cloud SDK Deserialize サンプル チュートリアル」](https://developer.aitrios.sony-semicon.com/development-guides/tutorials/cloud-sdk)の「はじめに」を参照してください。
+詳細は、 [「Cloud SDK Deserialize サンプル チュートリアル」](https://developer.aitrios.sony-semicon.com/development-guides/tutorials/cloud-sdk/)の「はじめに」を参照してください。
 
 ## チュートリアル
 チュートリアルとして、Deserialize用のコード自動生成手順と、生成されたコードの利用方法について記載しています。
-詳細は[「Cloud SDK Deserialize サンプル チュートリアル」](https://developer.aitrios.sony-semicon.com/development-guides/tutorials/cloud-sdk)を参照してください。
+詳細は[「Cloud SDK Deserialize サンプル チュートリアル」](https://developer.aitrios.sony-semicon.com/development-guides/tutorials/cloud-sdk/)を参照してください。
 
 ## ドキュメント
 ### 機能仕様書
