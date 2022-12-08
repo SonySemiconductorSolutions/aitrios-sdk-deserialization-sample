@@ -1,0 +1,19 @@
+# Set default line feed code to LF
+* text=auto eol=lf
+
+# Linux shell
+*.sh    text eol=lf
+
+# Windows shell
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Lists all binary files that should not be modified
+*.png   binary
+*.jpg   binary
+*.jar   binary
+
+# Linux shell for build tool
+mvnm    text eol=lf
+gradlew text eol=lf

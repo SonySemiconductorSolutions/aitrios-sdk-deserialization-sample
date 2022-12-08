@@ -1,0 +1,94 @@
+= Cloud SDK pass:[<br/>] Deserialize サンプル pass:[<br/>] 機能仕様書 pass:[<br/>]
+:title-page-background-image: image:../../../images/Trademark.png[fit=none,pdfwidth=50%,position=bottom center]
+:sectnums:
+:sectnumlevels: 4
+:chapter-label:
+:author: Copyright 2022 Sony Semiconductor Solutions Corporation
+:revdate: 2022 - xx - xx
+:revnumber: 0.0.x
+:toc:
+:toc-title: 目次
+:toclevels: 4
+:chapter-label:
+:document-title-header:
+:lang: ja
+
+== 更新履歴
+[width="100%",options="header"]
+|===
+|Date |What/Why
+
+|2022/11/16
+|初版作成
+
+|===
+
+== はじめに
+
+* 本書は、ユーザーに提供するDeserialize用のサンプルコード機能仕様書である。 +
+環境はPython/TypeScriptを対象とする。 +
+AIモデルはObject Detection/Classificationに対応する。 +
+なお、本環境下においてSerializeおよびDeserializeはFlatBuffersを利用していることとする。
+
+== 用語・略語
+[width="100%", cols="50%,50%",options="header"]
+|===
+|Terms/Abbreviations |Meaning 
+
+|FlatBuffers
+|Google製のバイナリシリアライズフォーマット
+
+|FBSファイル
+|FlatBuffers用のデータ構造を定義するファイル
+
+|===
+
+== 参照資料
+* 無し
+
+== 想定ユースケース
+* Serializeされた推論結果を復元して利用できる。
+** ユーザーはサンプルを実行することで、既存フォーマットの推論結果をDeserializeし取得できる。
+** ユーザーはサンプルコードとドキュメントを参考にすることで、独自に定義した推論結果フォーマットに対してのDeserialize用コード生成と実行方法を理解できる。
+
+== 機能概要、アルゴリズム
+=== Functional Overview
+* Serializeされた推論結果を復元する。
+
+=== Algorithm
+* FBSファイルを元に生成されたコードを使い、データをDeserializeする。
+
+=== Under what condition
+* Linux環境があること。
+** Deserialize用コードの自動生成を行う場合に必要となる。
+** 開発時はDockerを利用し、Ubuntu 20.04のコンテナ環境にて実施する。
+* コードの自動生成時に使用する「FlatBuffers-compiler」のバージョンは1.11.0とする。
+* データのSerialize用コードを生成したFBSファイルを所持していること。
+** Deserialize用コードの自動生成を行う場合に必要となる。
+** Serialize時とオブジェクトの定義が共通している必要がある。
+
+=== API
+* 無し
+
+=== Others Exclusive conditions / specifications
+* 無し
+
+== 操作性仕様、画面仕様
+=== How to start 
+* 無し
+
+== 各BlockでのAPIパラメータ
+* 無し
+
+== 目標性能
+* 無し
+
+== 制限事項
+* 利用するDeserializeコードと入力したAIタスク出力結果が一致しているか判別することができない。 +
+（例　Object Detectionの出力結果をClassificationのDeserializeコードに入力してもエラーが起きない。）
+
+== その他特記事項
+* 無し
+
+== 未決定事項
+* 無し
