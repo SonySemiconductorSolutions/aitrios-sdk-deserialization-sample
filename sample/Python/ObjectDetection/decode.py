@@ -18,6 +18,7 @@ import os
 import sys
 import base64
 import json
+from pathlib import Path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 from src.Python.ObjectDetection import object_detection_top
 from src.Python.ObjectDetection import bounding_box
@@ -26,6 +27,9 @@ from src.Python.ObjectDetection import bounding_box_2d
 
 def decode():
     # parse json
+    if Path('sample/ObjectDetection_encoded.json').is_symlink():
+        print('Can\'t open symbolic link file.')
+        return
     with open('sample/ObjectDetection_encoded.json', 'r', encoding='utf-8') as json_file:
         buf = json.load(json_file)
 
@@ -34,6 +38,9 @@ def decode():
         buf_decode = base64.b64decode(buf['Inferences'][0]['O'])
     else:
         print('not inference result in this data')
+        if Path('decoded_result_ObjectDetection.json').is_symlink():
+            print('Can\'t open symbolic link file.')
+            return
         with open('decoded_result_ObjectDetection.json', 'w', encoding='utf-8') as file:
             json.dump(buf, file, ensure_ascii=False, indent=4)
         print('write file : decoded_result_ObjectDetection.json')
@@ -61,6 +68,9 @@ def decode():
             buf['Inferences'][0][str(i + 1)]['x'] = bbox_2d.Right()
             buf['Inferences'][0][str(i + 1)]['y'] = bbox_2d.Bottom()
 
+    if Path('decoded_result_ObjectDetection.json').is_symlink():
+        print('Can\'t open symbolic link file.')
+        return
     with open('decoded_result_ObjectDetection.json', 'w', encoding='utf-8') as file:
         json.dump(buf, file, ensure_ascii=False, indent=4)
     print('write file : decoded_result_ObjectDetection.json')

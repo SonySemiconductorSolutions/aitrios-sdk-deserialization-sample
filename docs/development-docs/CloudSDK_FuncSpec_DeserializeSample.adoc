@@ -1,0 +1,98 @@
+= Cloud SDK pass:[<br/>] Deserialize Sample pass:[<br/>] Functional Specifications pass:[<br/>]
+:sectnums:
+:sectnumlevels: 1
+:author: Copyright 2023 Sony Semiconductor Solutions Corporation
+:version-label: Version 
+:revnumber: x.x.x
+:revdate: YYYY - MM - DD
+:trademark-desc1: AITRIOS™ and AITRIOS logos are the registered trademarks or trademarks
+:trademark-desc2: of Sony Group Corporation or its affiliated companies.
+:toc:
+:toc-title: TOC
+:toclevels: 1
+:chapter-label:
+:lang: en
+
+== Change history
+[width="100%", options="header"]
+|===
+|Date |What/Why
+
+|2022/11/16
+|Initial draft
+
+|2023/1/30
+|Unified the swinging of expressions + 
+Updated the PDF build environment
+
+|===
+
+== Introduction
+
+* This is functional specifications of the sample code for deserialization to be provided to users. + 
+The supported environment is Python/TypeScript. + 
+The supported AI models are object detection/classification. + 
+It is assumed that FlatBuffers are used to serialize and deserialize in this environment.
+
+== Terms/Abbreviations
+[width="100%", cols="50%,50%", options="header"]
+|===
+|Terms/Abbreviations |Meaning 
+
+|FlatBuffers
+|Google binary serialize format
+
+|FBS file
+|File which defines the data structure for FlatBuffers
+
+|===
+
+== Reference materials
+* None
+
+== Expected use case
+* Uses can deserialize and use serialized inference results.
+** Users can deserialize and get inference results from existing formats by running the sample.
+** Using sample code and documentation, users can understand how to generate and execute code for deserialize against their own defined inference result format.
+
+== Functional overview/Algorithm
+=== Functional overview
+* Deserializes serialized inference results.
+
+=== Algorithm
+* Deserializes data using code generated from the FBS file.
+
+=== Under what condition
+* Have a Linux environment.
+** This is needed to automatically generate code for deserialization.
+** Use Docker for development and run in a container environment on Ubuntu 20.04.
+* The version of the FlatBuffers-compiler used when generating code automatically is 1.11.0.
+* Have the FBS file that generated the code for serializing data.
+** This is needed to automatically generate code for deserialization.
+** Have the same object definition as when you serialize it.
+
+=== API
+* None
+
+=== Others exclusive conditions/Specifications
+* None
+
+== User interface specifications
+=== How to start 
+* None
+
+== API parameters in each block
+* None
+
+== Target performances/Impact on performances
+* None
+
+== Assumption/Restriction
+* Users cannot determine whether the output of the input AI task matches the deserialization code. + 
+（Example: When the output of object detection is entered into the classification deserialization code, no error occurs.）
+
+== Remarks
+* None
+
+== Unconfirmed items
+* None
