@@ -50,6 +50,11 @@ function main () {
     decodedData = Buffer.from(resultJson.Inferences[0].O, 'base64')
   } else {
     console.log('not inference result in this data')
+    if (fs.existsSync('./decoded_result_ObjectDetection.json')
+        && fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
+      console.log('Can\'t open symbolic link file.')
+      return
+    }
     fs.writeFileSync('./decoded_result_ObjectDetection.json', JSON.stringify(resultJson, null, 4))
     console.log('write file : decoded_result_ObjectDetection.json')
     return
@@ -81,6 +86,11 @@ function main () {
     }
   }
 
+  if (fs.existsSync('./decoded_result_ObjectDetection.json')
+      && fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
+    console.log('Can\'t open symbolic link file.')
+    return
+  }
   fs.writeFileSync('./decoded_result_ObjectDetection.json', JSON.stringify(resultJson, null, 4))
   console.log('write file : decoded_result_ObjectDetection.json')
 }

@@ -1,62 +1,62 @@
 # aitrios-sdk-deserialization-sample
 
 ## Contents <!-- omit in toc -->
-- [概要](#概要)
-  - [データ変換の流れ](#データ変換の流れ)
-  - [制限事項](#制限事項)
-- [チュートリアル](#チュートリアル)
-- [ドキュメント](#ドキュメント)
-  - [機能仕様書](#機能仕様書)
-- [サポート](#サポート)
-- [参照](#参照)
-- [商標](#商標)
+- [Overview](#overview)
+  - [Data conversion flow](#data-conversion-flow)
+  - [Restrictions](#restrictions)
+- [Tutorials](#tutorials)
+- [Documentation](#documentation)
+  - [Functional Specifications](#functional-specifications)
+- [Get support](#get-support)
+- [See also](#see-also)
+- [Trademark](#trademark)
 
-## 概要
-このリポジトリは、Console Access Libraryを使用して取得した推論結果を利用可能な形式に変換するソースコードと、その使い方のサンプルコードを格納したリポジトリです。<br>
-Console Access Libraryを使用して取得した推論結果はSerializeされているため、利用可能なデータ形式にDeserializeする必要があります。<br>
+## Overview
+This repository contains source code that converts inference results gotten using the Console Access Library into a usable format, as well as sample code for how to use it. <br>
+Inference results gotten using the Console Access Library have been serialized and must be deserialized into a usable data format. <br>
 
-取得した推論結果はBase64でEncodeされているためDeserializeする前にDecodeする必要があります。<br>
+Inference results gotten is encoded in Base64 and must be decoded before deserializing. <br>
 
-### データ変換の流れ
-Console Access Libraryを使用して取得した推論結果を、利用可能なデータ形式にする流れは以下の通りになります。
+### Data conversion flow
+The flow for converting inference results gotten using the Console Access Library into a usable data format is as follows.
 
-- 取得した推論結果がPPLを経由して出力されていた場合　　　　　　　　　　　　　
+- If the gotten inference results were output from PPL
 
-    1. Console Access Libraryを使用し、推論結果を取得する
-    2. Base64でDecodeする
-    3. Deserializeを行い推論結果を取得する
+    1. Get inference results using the Console Access Library
+    2. Decode in Base64
+    3. Deserialize and get inference results
 
-手順の詳細については[チュートリアル](#チュートリアル)を参照してください。
+See the [Tutorials](#tutorials) for details of the procedure.
 
-### 制限事項
+### Restrictions
 
-#### チュートリアルの対象データについて
-チュートリアルでは、PPLから出力された推論結果を取得する方法について解説しています。<br>
-PPL以外から出力された推論結果の取得方法は対象外となります。
+#### Target data for the tutorial
+The tutorial explains how to get inference results output from PPL.<br>
+It does not cover how to get inference results output from non-PPL.
 
-#### チュートリアルの対象環境について
-チュートリアルで解説するソースコード生成手順はLinux環境のみが対象となります。
+#### Target environment for the tutorial
+How to generate the source code explained in the tutorial is for Linux environments only.
 
-#### サポートしている言語について
-リポジトリに格納しているソースコードは、PythonとTypeScriptに対応しています。
+#### Supported languages
+The source code stored in the repository supports Python and TypeScript.
 
-詳細は、 [「Cloud SDK Deserialize サンプル チュートリアル」](https://developer.aitrios.sony-semicon.com/development-guides/tutorials/cloud-sdk/)の「はじめに」を参照してください。
+See the "Introduction" in the ["Cloud SDK Deserialize Sample Tutorial"](https://developer.aitrios.sony-semicon.com/development-guides/tutorials/cloud-sdk/) for details.
 
-## チュートリアル
-チュートリアルとして、Deserialize用のコード自動生成手順と、生成されたコードの利用方法について記載しています。
-詳細は[「Cloud SDK Deserialize サンプル チュートリアル」](https://developer.aitrios.sony-semicon.com/development-guides/tutorials/cloud-sdk/)を参照してください。
+## Tutorials
+The tutorial explains how to generate automatically source code for deserialize and how to use the generated code.
+See the ["Cloud SDK Deserialize Sample Tutorial"](https://developer.aitrios.sony-semicon.com/development-guides/tutorials/cloud-sdk/) for details.
 
-## ドキュメント
-### 機能仕様書
+## Documentation
+### Functional Specifications
 - Deserialize
-    - [Cloud SDK Deserialize サンプル 機能仕様書](./docs/development-docs/CloudSDK_FuncSpec_DeserializeSample_ja.pdf)
+    - [Cloud SDK Deserialize Sample Functional Specifications](./docs/development-docs/CloudSDK_FuncSpec_DeserializeSample.pdf)
 
-## サポート
+## Get support
 - [Contact us](https://developer.aitrios.sony-semicon.com/contact-us/)
 
-## 参照
+## See also
 - [aitrios-sdk-console-access-lib-python](https://github.com/SonySemiconductorSolutions/aitrios-sdk-console-access-lib-python)
 - [aitrios-sdk-console-access-lib-ts](https://github.com/SonySemiconductorSolutions/aitrios-sdk-console-access-lib-ts)
 
-## 商標
+## Trademark
 - [Read This First](https://developer.aitrios.sony-semicon.com/development-guides/documents/manuals/)
