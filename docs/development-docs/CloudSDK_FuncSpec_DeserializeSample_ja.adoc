@@ -1,16 +1,15 @@
 = Cloud SDK pass:[<br/>] Deserialize サンプル pass:[<br/>] 機能仕様書 pass:[<br/>]
-:title-page-background-image: image:../../../images/Trademark.png[fit=none,pdfwidth=50%,position=bottom center]
 :sectnums:
-:sectnumlevels: 4
-:chapter-label:
-:author: Copyright 2022 Sony Semiconductor Solutions Corporation
-:revdate: 2022 - xx - xx
-:revnumber: 0.0.x
+:sectnumlevels: 1
+:author: Copyright 2023 Sony Semiconductor Solutions Corporation
+:version-label: Version 
+:revnumber: x.x.x
+:revdate: YYYY - MM - DD
+:trademark-desc: AITRIOS™、およびそのロゴは、ソニーグループ株式会社またはその関連会社の登録商標または商標です。
 :toc:
 :toc-title: 目次
-:toclevels: 4
+:toclevels: 1
 :chapter-label:
-:document-title-header:
 :lang: ja
 
 == 更新履歴
@@ -20,6 +19,10 @@
 
 |2022/11/16
 |初版作成
+
+|2023/1/30
+|表現統一 + 
+PDFビルド環境更新
 
 |===
 
@@ -44,7 +47,7 @@ AIモデルはObject Detection/Classificationに対応する。 +
 |===
 
 == 参照資料
-* 無し
+* なし
 
 == 想定ユースケース
 * Serializeされた推論結果を復元して利用できる。
@@ -68,27 +71,27 @@ AIモデルはObject Detection/Classificationに対応する。 +
 ** Serialize時とオブジェクトの定義が共通している必要がある。
 
 === API
-* 無し
+* なし
 
 === Others Exclusive conditions / specifications
-* 無し
+* なし
 
 == 操作性仕様、画面仕様
 === How to start 
-* 無し
+* なし
 
 == 各BlockでのAPIパラメータ
-* 無し
+* なし
 
 == 目標性能
-* 無し
+* なし
 
 == 制限事項
 * 利用するDeserializeコードと入力したAIタスク出力結果が一致しているか判別することができない。 +
 （例　Object Detectionの出力結果をClassificationのDeserializeコードに入力してもエラーが起きない。）
 
 == その他特記事項
-* 無し
+* なし
 
 == 未決定事項
-* 無し
+* なし

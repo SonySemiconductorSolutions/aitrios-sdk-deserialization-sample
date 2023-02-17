@@ -18,12 +18,16 @@ import os
 import sys
 import base64
 import json
+from pathlib import Path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 from src.Python.Classification import classification_top
 
 
 def decode():
     # parse json
+    if Path('sample/Classification_encoded.json').is_symlink():
+        print('Can\'t open symbolic link file.')
+        return
     with open('sample/Classification_encoded.json', 'r', encoding='utf-8') as json_file:
         buf = json.load(json_file)
 
@@ -32,6 +36,9 @@ def decode():
         buf_decode = base64.b64decode(buf['Inferences'][0]['O'])
     else:
         print('not inference result in this data')
+        if Path('decoded_result_Classification.json').is_symlink():
+            print('Can\'t open symbolic link file.')
+            return
         with open('decoded_result_Classification.json', 'w', encoding='utf-8') as file:
             json.dump(buf, file, ensure_ascii=False, indent=4)
         print('write file : decoded_result_Classification.json')
@@ -51,6 +58,9 @@ def decode():
         buf['Inferences'][0][str(i + 1)]['C'] = cls_list.ClassId()
         buf['Inferences'][0][str(i + 1)]['P'] = cls_list.Score()
 
+    if Path('decoded_result_Classification.json').is_symlink():
+        print('Can\'t open symbolic link file.')
+        return
     with open('decoded_result_Classification.json', 'w', encoding='utf-8') as file:
         json.dump(buf, file, ensure_ascii=False, indent=4)
     print('write file : decoded_result_Classification.json')
