@@ -1,0 +1,11 @@
+{
+    "DeviceID": "Sample012345",
+    "ModelID": "Sample012345",
+    "Image": false,
+    "Inferences": [
+        {
+            "T": "0123456789",
+            "O": "DAAAAAAABgAKAAQABgAAABQAAAAAAA4AFAAGAAgADAAKABAADgAAAAAAAwADAAIAVAAAAAQAAAASAAAABV8ePuo6FT68K3g+DQHbPvRLwj6QdEs/bKwfPxoT4D5r228+3OefPqZXCT/nzgI+gAEePaQiEz6J3L8+vGtCP3sDLz/KtkE9CQAAAAAAAQACAAMABAAFAAYABwAIAAAA"
+        }
+    ]
+}

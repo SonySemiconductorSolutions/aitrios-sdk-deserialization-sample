@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+ * Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { flatbuffers } from 'flatbuffers'
-import { SmartCamera } from '../../../src/TypeScript/Classification/ClassificationGenerated'
+import * as flatbuffers from 'flatbuffers'
+import { SmartCamera } from '../../../src/TypeScript/Classification/classification'
 import jsonFile from '../../Classification_encoded.json'
 
 const fs = require('fs')
@@ -33,8 +33,8 @@ type outputResult = {
 }
 
 type Inference = {
-    'C': number,
-    'P': number
+    'class_id': number,
+    'score': number
 }
 
 function main () {
@@ -46,8 +46,8 @@ function main () {
     decodedData = Buffer.from(resultJson.Inferences[0].O, 'base64')
   } else {
     console.log('not inference result in this data')
-    if (fs.existsSync('./decoded_result_ObjectDetection.json')
-        && fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
+    if (fs.existsSync('./decoded_result_ObjectDetection.json') &&
+        fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
       console.log('Can\'t open symbolic link file.')
       return
     }
@@ -67,15 +67,15 @@ function main () {
   for (let i = 0; i < resNum; i++) {
     const clsList = readclassData.classificationList(i)
     const res : Inference = {
-      C: Number(clsList.classId()),
-      P: Number(clsList.score())
+      class_id: Number(clsList.classId()),
+      score: Math.round(Number(clsList.score()) * 1000000) / 1000000
     }
     const inferenceKey = String(i + 1)
     resultJson.Inferences[0][inferenceKey] = res
   }
 
-  if (fs.existsSync('./decoded_result_ObjectDetection.json')
-      && fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
+  if (fs.existsSync('./decoded_result_ObjectDetection.json') &&
+      fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
     console.log('Can\'t open symbolic link file.')
     return
   }
