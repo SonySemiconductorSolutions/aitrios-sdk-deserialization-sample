@@ -1,5 +1,5 @@
 """
-Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import base64
 import json
 from pathlib import Path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
-from src.Python.Classification import classification_top
+from src.Python.Classification.SmartCamera import ClassificationTop
 
 
 def decode():
@@ -45,7 +45,7 @@ def decode():
         return
 
     # Deserialize
-    ppl_out = classification_top.ClassificationTop.GetRootAsClassificationTop(buf_decode, 0)
+    ppl_out = ClassificationTop.ClassificationTop.GetRootAsClassificationTop(buf_decode, 0)
     cls_data = ppl_out.Perception()
     res_num = cls_data.ClassificationListLength()
     print('NumOfDetections:' + str(res_num))
@@ -55,8 +55,8 @@ def decode():
     for i in range(res_num):
         cls_list = cls_data.ClassificationList(i)
         buf['Inferences'][0][str(i + 1)] = {}
-        buf['Inferences'][0][str(i + 1)]['C'] = cls_list.ClassId()
-        buf['Inferences'][0][str(i + 1)]['P'] = cls_list.Score()
+        buf['Inferences'][0][str(i + 1)]['class_id'] = cls_list.ClassId()
+        buf['Inferences'][0][str(i + 1)]['score'] = round(cls_list.Score(), 6)
 
     if Path('decoded_result_Classification.json').is_symlink():
         print('Can\'t open symbolic link file.')

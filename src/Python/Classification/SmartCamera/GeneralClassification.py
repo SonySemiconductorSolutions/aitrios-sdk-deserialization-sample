@@ -1,5 +1,5 @@
 """
-Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+Copyright 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,18 +18,23 @@ limitations under the License.
 # namespace: SmartCamera
 
 import flatbuffers
-
+from flatbuffers.compat import import_numpy
+np = import_numpy()
 
 class GeneralClassification(object):
     __slots__ = ['_tab']
 
     @classmethod
-    def GetRootAsGeneralClassification(cls, buf, offset):
+    def GetRootAs(cls, buf, offset=0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = GeneralClassification()
         x.Init(buf, n + offset)
         return x
 
+    @classmethod
+    def GetRootAsGeneralClassification(cls, buf, offset=0):
+        """This method is deprecated. Please switch to GetRootAs."""
+        return cls.GetRootAs(buf, offset)
     # GeneralClassification
     def Init(self, buf, pos):
         self._tab = flatbuffers.table.Table(buf, pos)
@@ -48,14 +53,15 @@ class GeneralClassification(object):
             return self._tab.Get(flatbuffers.number_types.Float32Flags, o + self._tab.Pos)
         return 0.0
 
-
 def GeneralClassificationStart(builder): builder.StartObject(2)
-
-
-def GeneralClassificationAddClassId(
-    builder, classId): builder.PrependUint32Slot(0, classId, 0)
-def GeneralClassificationAddScore(
-    builder, score): builder.PrependFloat32Slot(1, score, 0.0)
-
-
+def Start(builder):
+    return GeneralClassificationStart(builder)
+def GeneralClassificationAddClassId(builder, classId): builder.PrependUint32Slot(0, classId, 0)
+def AddClassId(builder, classId):
+    return GeneralClassificationAddClassId(builder, classId)
+def GeneralClassificationAddScore(builder, score): builder.PrependFloat32Slot(1, score, 0.0)
+def AddScore(builder, score):
+    return GeneralClassificationAddScore(builder, score)
 def GeneralClassificationEnd(builder): return builder.EndObject()
+def End(builder):
+    return GeneralClassificationEnd(builder)

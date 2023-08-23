@@ -25,13 +25,17 @@
 |Unified the swinging of expressions + 
 Updated the PDF build environment
 
+|2023/5/26
+|Upgraded the version of FlatBuffers to use (1.11.0 -> 23.1.21) +
+ Fixed "Under what condition" content + 
+ Added Semantic Segmentation to supported AI models
 |===
 
 == Introduction
 
 * This is functional specifications of the sample code for deserialization to be provided to users. + 
 The supported environment is Python/TypeScript. + 
-The supported AI models are object detection/classification. + 
+The supported AI models are Object Detection/Classification/Semantic Segmentation. + 
 It is assumed that FlatBuffers are used to serialize and deserialize in this environment.
 
 == Terms/Abbreviations
@@ -63,13 +67,8 @@ It is assumed that FlatBuffers are used to serialize and deserialize in this env
 * Deserializes data using code generated from the FBS file.
 
 === Under what condition
-* Have a Linux environment.
-** This is needed to automatically generate code for deserialization.
-** Use Docker for development and run in a container environment on Ubuntu 20.04.
-* The version of the FlatBuffers-compiler used when generating code automatically is 1.11.0.
-* Have the FBS file that generated the code for serializing data.
-** This is needed to automatically generate code for deserialization.
-** Have the same object definition as when you serialize it.
+* If you want to generate code automatically, you must have an FBS file.
+** The version of the FlatBuffers-compiler used when generating code automatically is 23.1.21.
 
 === API
 * None

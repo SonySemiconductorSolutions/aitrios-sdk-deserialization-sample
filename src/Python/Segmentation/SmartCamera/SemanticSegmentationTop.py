@@ -1,5 +1,5 @@
 """
-Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+Copyright 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,37 +18,44 @@ limitations under the License.
 # namespace: SmartCamera
 
 import flatbuffers
+from flatbuffers.compat import import_numpy
+np = import_numpy()
 
-
-class ClassificationTop(object):
+class SemanticSegmentationTop(object):
     __slots__ = ['_tab']
 
     @classmethod
-    def GetRootAsClassificationTop(cls, buf, offset):
+    def GetRootAs(cls, buf, offset=0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
-        x = ClassificationTop()
+        x = SemanticSegmentationTop()
         x.Init(buf, n + offset)
         return x
 
-    # ClassificationTop
+    @classmethod
+    def GetRootAsSemanticSegmentationTop(cls, buf, offset=0):
+        """This method is deprecated. Please switch to GetRootAs."""
+        return cls.GetRootAs(buf, offset)
+    # SemanticSegmentationTop
     def Init(self, buf, pos):
         self._tab = flatbuffers.table.Table(buf, pos)
 
-    # ClassificationTop
+    # SemanticSegmentationTop
     def Perception(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             x = self._tab.Indirect(o + self._tab.Pos)
-            from .classification_data import ClassificationData
-            obj = ClassificationData()
+            from .SemanticSegmentationData import SemanticSegmentationData
+            obj = SemanticSegmentationData()
             obj.Init(self._tab.Bytes, x)
             return obj
         return None
 
-
-def ClassificationTopStart(builder): builder.StartObject(1)
-def ClassificationTopAddPerception(builder, perception): builder.PrependUOffsetTRelativeSlot(
-    0, flatbuffers.number_types.UOffsetTFlags.py_type(perception), 0)
-
-
-def ClassificationTopEnd(builder): return builder.EndObject()
+def SemanticSegmentationTopStart(builder): builder.StartObject(1)
+def Start(builder):
+    return SemanticSegmentationTopStart(builder)
+def SemanticSegmentationTopAddPerception(builder, perception): builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(perception), 0)
+def AddPerception(builder, perception):
+    return SemanticSegmentationTopAddPerception(builder, perception)
+def SemanticSegmentationTopEnd(builder): return builder.EndObject()
+def End(builder):
+    return SemanticSegmentationTopEnd(builder)

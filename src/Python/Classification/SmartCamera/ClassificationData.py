@@ -1,5 +1,5 @@
 """
-Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+Copyright 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,18 +18,23 @@ limitations under the License.
 # namespace: SmartCamera
 
 import flatbuffers
-
+from flatbuffers.compat import import_numpy
+np = import_numpy()
 
 class ClassificationData(object):
     __slots__ = ['_tab']
 
     @classmethod
-    def GetRootAsClassificationData(cls, buf, offset):
+    def GetRootAs(cls, buf, offset=0):
         n = flatbuffers.encode.Get(flatbuffers.packer.uoffset, buf, offset)
         x = ClassificationData()
         x.Init(buf, n + offset)
         return x
 
+    @classmethod
+    def GetRootAsClassificationData(cls, buf, offset=0):
+        """This method is deprecated. Please switch to GetRootAs."""
+        return cls.GetRootAs(buf, offset)
     # ClassificationData
     def Init(self, buf, pos):
         self._tab = flatbuffers.table.Table(buf, pos)
@@ -41,7 +46,7 @@ class ClassificationData(object):
             x = self._tab.Vector(o)
             x += flatbuffers.number_types.UOffsetTFlags.py_type(j) * 4
             x = self._tab.Indirect(x)
-            from .general_classification import GeneralClassification
+            from .GeneralClassification import GeneralClassification
             obj = GeneralClassification()
             obj.Init(self._tab.Bytes, x)
             return obj
@@ -54,14 +59,20 @@ class ClassificationData(object):
             return self._tab.VectorLen(o)
         return 0
 
+    # ClassificationData
+    def ClassificationListIsNone(self):
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
+        return o == 0
 
 def ClassificationDataStart(builder): builder.StartObject(1)
-
-
-def ClassificationDataAddClassificationList(builder, classificationList): builder.PrependUOffsetTRelativeSlot(
-    0, flatbuffers.number_types.UOffsetTFlags.py_type(classificationList), 0)
-def ClassificationDataStartClassificationListVector(
-    builder, numElems): return builder.StartVector(4, numElems, 4)
-
-
+def Start(builder):
+    return ClassificationDataStart(builder)
+def ClassificationDataAddClassificationList(builder, classificationList): builder.PrependUOffsetTRelativeSlot(0, flatbuffers.number_types.UOffsetTFlags.py_type(classificationList), 0)
+def AddClassificationList(builder, classificationList):
+    return ClassificationDataAddClassificationList(builder, classificationList)
+def ClassificationDataStartClassificationListVector(builder, numElems): return builder.StartVector(4, numElems, 4)
+def StartClassificationListVector(builder, numElems):
+    return ClassificationDataStartClassificationListVector(builder, numElems)
 def ClassificationDataEnd(builder): return builder.EndObject()
+def End(builder):
+    return ClassificationDataEnd(builder)

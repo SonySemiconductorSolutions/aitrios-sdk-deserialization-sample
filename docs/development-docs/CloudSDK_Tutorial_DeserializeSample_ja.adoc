@@ -1,0 +1,524 @@
+= Cloud SDK pass:[<br/>] Deserialize サンプル pass:[<br/>] チュートリアル pass:[<br/>] 
+:sectnums:
+:sectnumlevels: 1
+:author: Copyright 2023 Sony Semiconductor Solutions Corporation
+:version-label: Version 
+:revnumber: x.x.x
+:revdate: YYYY - MM - DD
+:trademark-desc: AITRIOS™、およびそのロゴは、ソニーグループ株式会社またはその関連会社の登録商標または商標です。
+:toc:
+:toc-title: 目次
+:toclevels: 1
+:chapter-label:
+:lang: ja
+
+== 更新履歴
+[width="100%", cols="23%,77%",options="header"]
+|===
+|Date |What/Why 
+
+|2022/12/12
+|初版作成
+
+|2023/1/30
+|誤記修正 + 
+表現統一 + 
+記法修正 + 
+「**Vision and Sensing Application SDK**」 ディレクトリ構成変更対応 + 
+PDFビルド環境更新
+
+|2023/5/26
+|FlatBuffersバージョン更新対応 + 
+Semantic Segmentation追加対応
+
+|===
+
+== はじめに
+このチュートリアルでは、FlatBuffersを使用したDeserialize用のコード自動生成手順と、生成されたコードの利用方法について解説します。 +
+このチュートリアルでは以下のBase AI Modelをサポートしています。 +
+
+* Object Detection
+* Classification
+* Semantic Segmentation
+
+PythonとTypeScriptで生成されたソースコードの利用方法について解説します。 +
+その他のFlatBuffersがサポートする言語に関しては、公式ページ(https://google.github.io/flatbuffers/flatbuffers_support.html[Platform/Language/Feature_support])を参照してください。
+
+== 用語・略語
+|===
+|Terms/Abbreviations |Meaning 
+
+|FlatBuffers
+|Google製のバイナリシリアライズフォーマット
+
+|FBSファイル
+|FlatBuffers用のデータ構造を定義するファイル
+
+|===
+
+== Deserializeリポジトリ構成
+Deserialize-sampleの動作環境は下記の通りです。
+実装にかかわらない部分に関しては省略します。
+----
+aitrios-sdk-deserialization-sample
+├── sample (1)
+├── src
+│   ├── Python (2)
+│   └── TypeScript (3)
+----
+(1) sample : 自動生成されたコードの使い方サンプルコードを格納しているフォルダ +
+(2) Python : Python用に自動生成されたソースコードを格納しているフォルダ +
+(3) TypeScript : TypeScript用に自動生成されたソースコードを格納しているフォルダ
+
+
+----
+├── sample
+│   ├── Classification_encoded.json (1)
+│   ├── ObjectDetection_encoded.json (2)
+│   ├── Segmentation_encoded.json (3)
+│   ├── Python
+│   │   ├── Classification
+│   │   │   └── decode.py (4)
+│   │   ├── ObjectDetection
+│   │   │   └── decode.py (5)
+│   │   ├── Segmentation
+│   │   │   └── decode.py (6)
+│   │   └── requirements.txt
+│   └── TypeScript
+│       ├── Classification
+│       │   └── decode.ts (7)
+│       ├── ObjectDetection
+│       │    └── decode.ts (8)
+│       └── Segmentation
+│            └── decode.ts (9)
+----
+(1) Classification_encoded.json : Classificationに対応する、Deserialize動作確認用の入力データ +
+(2) ObjectDetection_encoded.json : Object Detectionに対応する、Deserialize動作確認用の入力データ +
+(3) Segmentation_encoded : Semantic Segmentationに対応する、Deserialize動作確認用の入力データ +
+(4) decode.py : Classification : Python用に自動生成されたソースコードの使用サンプル +
+(5) decode.py : ObjectDetection : Python用に自動生成されたソースコードの使用サンプル +
+(6) decode.py : Segmentation : Python用に自動生成されたソースコードの使用サンプル +
+(7) decode.ts : Classification : TypeScript用に自動生成されたソースコードの使用サンプル +
+(8) decode.ts : ObjectDetection : TypeScript用に自動生成されたソースコードの使用サンプル +
+(9) decode.ts : Segmentation : TypeScript用に自動生成されたソースコードの使用サンプル +
+
+
+
+----
+├── src
+│   └── Python
+│       ├── Classification (1)
+│       │   └── SmartCamera
+│       │       ├── ClassificationData.py
+│       │       ├── ClassificationTop.py
+│       │       ├── GeneralClassification.py
+│       │       └── __init__.py
+│       ├── ObjectDetection (2)
+│       │   └── SmartCamera
+│       │       ├── BoundingBox.py
+│       │       ├── BoundingBox2d.py
+│       │       ├── GeneralObject.py
+│       │       ├── ObjectDetectionData.py
+│       │       ├── ObjectDetectionTop.py
+│       │       └── __init__.py
+│       └── Segmentation (3)
+│           └── SmartCamera
+│               ├── SemanticSegmentationData.py
+│               ├── SemanticSegmentationTop.py
+│               └── __init__.py
+----
+(1) Classification : PythonでClassification用に自動生成されたソースコードを格納しているフォルダ +
+(2) ObjectDetection : PythonでObject Detection用に自動生成されたソースコードを格納しているフォルダ +
+(3) Segmentation : PythonでSemantic Segmentation用に自動生成されたソースコードを格納しているフォルダ
+
+----
+├── src
+│   └── TypeScript
+│       ├── Classification (1)
+│       │   ├── classification.ts
+│       │   ├── smart-camera
+│       │   │   ├── classification-data.ts
+│       │   │   ├── classification-top.ts
+│       │   │   └── general-classification.ts
+│       │   └── smart-camera.ts
+│       ├── ObjectDetection (2)
+│       │   ├── objectdetection.ts
+│       │   ├── smart-camera
+│       │   │   ├── bounding-box.ts
+│       │   │   ├── bounding-box2d.ts
+│       │   │   ├── general-object.ts
+│       │   │   ├── object-detection-data.ts
+│       │   │   └── object-detection-top.ts
+│       │   └── smart-camera.ts
+│       └── Segmentation (3)
+│           ├── semantic_segmentation.ts
+│           ├── smart-camera
+│           │   ├── semantic-segmentation-data.ts
+│           │   └── semantic-segmentation-top.ts
+│           └── smart-camera.ts
+----
+(1) Classification : TypeScriptでClassification用に自動生成されたソースコードを格納しているフォルダ +
+(2) ObjectDetection : TypeScriptでObject Detection用に自動生成されたソースコードを格納しているフォルダ +
+(3) Segmentation : TypeScriptでSemantic Segmentation用に自動生成されたソースコードを格納しているフォルダ +
+
+== FlatBuffers-compilerの利用環境を構築する
+FlatBuffers-compilerのバージョンは  23.1.21を使用します。
+
+. https://github.com/google/flatbuffers/releases/download/v23.1.21/Windows.flatc.binary.zip[Windows用FlatBuffers-compiler]をダウンロードする
+. ダウンロードしたzipファイルを右クリックし、[**全てを展開**]を選んで任意フォルダに解凍する
+. コマンドプロンプトを起動し、上記で解凍したフォルダに移動し、バージョンが表示されることを確認する
++
+....
+> flatc.exe --version
+....
+
+[NOTE]
+====
+上記の手順はWindows 10を想定しています。 +
+Windows以外の環境で構築する場合は公式ページ(https://github.com/google/flatbuffers/releases[FlatBuffers:Writing_schema])
+から対応するコンパイラーをインストールしてください。 +
+====
+
+== Deserialize用のソースコードを自動生成する
+FBSファイルからDeserialize用のソースコードを自動生成する手順について説明します。
+
+. Windows環境上にFBSファイルを用意する +
+任意のディレクトリに対象となるFBSファイルを保存してください。
+本ドキュメントのサンプルコードは、下記のFBSファイルを使用して生成しています。 +
+* link:https://github.com/SonySemiconductorSolutions/aitrios-sdk-vision-sensing-app/blob/main/tutorials/4_prepare_application/1_develop/sdk/schema/classification.fbs[classification.fbs]
+* link:https://github.com/SonySemiconductorSolutions/aitrios-sdk-vision-sensing-app/blob/main/tutorials/4_prepare_application/1_develop/sdk/schema/objectdetection.fbs[objectdetection.fbs]
+* link:https://github.com/SonySemiconductorSolutions/aitrios-sdk-vision-sensing-app/blob/main/tutorials/4_prepare_application/1_develop/sdk/schema/semantic_segmentation.fbs[semantic_segmentation.fbs]
+
++
+FBSファイルの書き方は、公式ページ(https://google.github.io/flatbuffers/flatbuffers_guide_writing_schema.html[FlatBuffers:Writing_schema])を参照してください。 +
+
+
+. FlatBuffers-compilerを使用しソースコードを生成する +
+FBSファイルを保存したディレクトリで、下記コマンドを実行します。 +
+作成する言語にあわせ、コマンドのオプションを変更します。 +
+使用出来るオプションについては、公式ページ(https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html[FlatBuffers:Using_schema_compiler])を参照してください。
++
+....
+> flatc <言語名> <FBSファイル名>
+....
+
++
+[TIP]
+====
+TypeScript用のソースコード生成コマンドを使用する場合、ディレクトリやソースファイル名は大文字を切れ目としたチェインケースに変換されます。 +
+ 例1）「namespace TypeScript.Sample;」 と設定した場合 → 「type-script/sample」ディレクトリにソースコードが生成されます。 +
+ 例2）table名を「ObjectDetectionTop」と設定した場合 → 「object-detection-top.ts」というファイル名でソースコードが生成されます。
+====
+
+== 生成されたソースコードを利用してDeserializeを行う
+自動生成されたソースコードを利用し、Deserializeを行う手順について説明します。 +
+このチュートリアルでは、PythonとTypeScriptについてのサンプルコードを例に、それぞれの手順について解説していきます。 +
+
+=== Pythonの場合
+Pythonの実行環境を用意し、自動生成されたソースコードを配置します。
+
+==== 必要なライブラリをインストールする
+ターミナルで下記のコマンドを実行し、必要なライブラリをインストールします。
+
+....
+$ pip install Flatbuffers==23.1.21
+....
+
+
+====  自動生成されたPythonコードを使用する
+`**src/Python/ObjectDetection/decode.py**` の実装を例に、自動生成されたソースコードをPythonで使用する方法を説明します。 +
+
+==== 1. 必要なソースコードをimportする
+[source,Python]
+----
+from src.Python.ObjectDetection.SmartCamera import ObjectDetectionTop
+from src.Python.ObjectDetection.SmartCamera import BoundingBox
+from src.Python.ObjectDetection.SmartCamera import BoundingBox2d
+----
+
+==== 2. 推論結果をBase64でDecodeする
+[source,Python]
+----
+buf_decode = base64.b64decode(buf['Inferences'][0]['O'])
+----
+「**Console for AITRIOS**」から受け取る推論結果は、Serialize後にBase64でEncodeされているため、Decodeをする必要があります。 +
+`**buf**` にJSON形式のデータを読み込みます。 +
+読み込んだJSONのKey['O']がDeserialize対象のため、Key['O']があった場合に、Decodeを実行します。
+
+==== 3.Deserializeする
+
+[source,Python]
+----
+ppl_out = ObjectDetectionTop.ObjectDetectionTop.GetRootAsObjectDetectionTop(buf_decode, 0)
+----
+上記の `**decode.py**` のソースコードで、 Deserializeしたオブジェクトを取得できます。 +
+FBSファイルの `**root_type**` で指定されたtableに対し、 `**GetRootAsObjectDetectionTop(buf_decode, 0)**` メソッドを呼び出します。
+
+==== 4.Deserializeしたデータから推論結果を取得する
+[source,Python]
+----
+obj_data = ppl_out.Perception()
+res_num = obj_data.ObjectDetectionListLength()
+print('NumOfDetections:' + str(res_num))
+
+# generate json
+buf['Inferences'][0].pop('O')
+for i in range(res_num):
+    obj_list = obj_data.ObjectDetectionList(i) 
+        buf['Inferences'][0][str(i + 1)] = {}
+        buf['Inferences'][0][str(i + 1)]['class_id'] = obj_list.ClassId()
+        buf['Inferences'][0][str(i + 1)]['score'] = round(obj_list.Score(), 6)
+
+----
+上記の `**decode.py**` のソースコードで、Deserializeしたデータから推論結果を取得できます。 +
+オブジェクトの構造はFBSファイルで定義されています。 +
+FBSファイルで定義された構造に沿ってオブジェクトを取得し、推論結果にアクセスします。 +
+`**ObjectDetectionTop**` 型のオブジェクト `**ppl_out**` から `**Perception()**` を呼び出し、`**ObjectDetectionData**` 型のオブジェクトの `**obj_data**` を取得します。 +
+`**obj_data**` の `**ObjectDetectionList(i)**` を呼び出し、`**GeneralObject**` 型のオブジェクト `**obj_list**` を取得します。 +
+`**obj_list**` を取得し、取得したい推論結果に対応する関数を呼び出すことで推論結果を取得できます。 +
+関数名・クラス名・フィールド名の定義は、ソースコード生成時に利用するFBSファイルによって異なります。 
+
+
+
+=== TypeScriptの場合
+TypeScriptの実行環境を用意し、自動生成されたソースコードを配置します。
+
+==== 必要なライブラリをインストールする
+ターミナルで下記のコマンドを実行し、必要なライブラリをインストールします。
+
+....
+$ npm install flatbuffers@23.1.21
+....
+
+FlatBuffersは自動生成されたDeserialize用のソースコードでimportしているため、事前にインストールをする必要があります。
+
+====  自動生成されたTypeScriptコードを使用する
+`**src/TypeScript/ObjectDetection/decode.ts**` の実装を例に、自動生成されたソースコードをTypeScriptで使用する方法を説明します。 
+
+==== 1. 必要なソースコードをimportする
+[source,TypeScript]
+----
+import { SmartCamera } from '../../../src/TypeScript/ObjectDetection/objectdetection'
+----
+
+==== 2. 推論結果をBase64でDecodeする
+[source,TypeScript]
+----
+// Base64 decode
+let decodedData:Buffer
+if ('O' in resultJson.Inferences[0]) {
+  decodedData = Buffer.from(resultJson.Inferences[0].O, 'base64')
+} else {
+  console.log('not inference result in this data')
+  fs.writeFileSync('./decoded_result_ObjectDetection.json', JSON.stringify(resultJson, null, 4))
+  console.log('write file : decoded_result_ObjectDetection.json')
+  return
+}
+----
+「**Console for AITRIOS**」から受け取る推論結果は、Serialize後にBase64でEncodeされているため、Decodeをする必要があります。 +
+`**decodedData**` にJSON形式のデータを読み込みます。 +
+読み込んだJSONのKey['O']がDeserialize対象のため、Key['O']があった場合に、Decodeを実行します。
+
+==== 3.Deserializeする
+
+[source,TypeScript]
+----
+const pplOut = SmartCamera.ObjectDetectionTop.getRootAsObjectDetectionTop(new flatbuffers.ByteBuffer(decodedData))
+----
+上記の `**decode.ts**` のソースコードで、 Deserializeしたオブジェクトを取得できます。 +
+FBSファイルの `**root_type**` で指定されたtableに対し、 `**getRootAsObjectDetectionTop(new flatbuffers.ByteBuffer(decodedData))**` メソッドを呼び出します。 +
+自動生成されたコードにデータを渡す際、FlatBuffersライブラリ内で提供されているByteBuffer型に変換する必要があります。
+
+==== 4. Deserializeしたデータを取得する
+
+[source,TypeScript]
+----
+const readObjData = pplOut.perception()
+const resNum = readObjData.objectDetectionListLength()
+console.log('NumOfDetections:' + String(resNum))
+
+// generate JSON
+delete resultJson.Inferences[0].O
+for (let i = 0; i < resNum; i++) {
+  const objList = readObjData.objectDetectionList(i)
+  const res : Inference = {
+    class_id: Number(objList.classId()),
+    score: Math.round(Number(objList.score()) * 1000000) / 1000000
+  }
+  const inferenceKey = String(i + 1)
+  resultJson.Inferences[0][inferenceKey] = res
+}
+
+----
+上記の `**decode.ts**` のソースコードで、Deserializeしたデータから推論結果を取得できます。 +
+オブジェクトの構造はFBSファイルで定義されています。 +
+FBSファイルで定義された構造に沿ってオブジェクトを取得し、推論結果にアクセスします。 +
+`**ObjectDetectionTop**` クラスの `**pplOut**` から `**perception()**` を呼び出し、`**ObjectDetectionData**` クラスの `**readObjData**` を取得します。 +
+`**readObjData**` の `**objectDetectionList(i)**` を呼び出し、`**GeneralObject**` クラスのインスタンス `**objList**` を取得します。 +
+`**objList**` を取得し、取得したい推論結果に対応する関数を呼び出すことで推論結果を取得できます。 +
+関数名・クラス名・フィールド名の定義は、ソースコード生成時に利用するFBSファイルによって異なります。
+
+== サンプルコードを実行する
+sampleディレクトリ以下に格納されているサンプルコードを利用することで、推論結果をDeserializeする挙動を確認できます。 +
+DeserializeするInput情報として、sample/ディレクトリ配下に `**<Base AI Model>_encoded.json**` が用意してあります。 +
+実行結果として `**decoded_result_<Base AI Model>.json**` のファイル名で、リポジトリのルートディレクトリにJSONファイルが生成されます。
+
+=== Pythonのサンプルコードを実行する
+リポジトリのルートディレクトリで下記のコマンドを実行してください。
+
+. 環境準備
++
+....
+$ pip install -r sample/Python/requirements.txt
+....
+. 実行コマンド
++
+....
+$ python sample/Python/<Base AI Model>/decode.py
+....
++
+コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<Base AI Model>.json**` が生成されます。 
++
+....
+NumOfDetections:2
+write file : decoded_result_<Base AI Model>.json
+....
+
+=== TypeScriptのサンプルコードを実行する
+リポジトリのルートディレクトリで、下記のコマンドを実行してください。 
+
+. 環境準備
++
+....
+$ npm install
+....
+. 実行コマンド
++
+....
+$ npm run <Base AI Model>
+....
++
+
+コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<Base AI Model>.json**` が生成されます。
++
+....
+NumOfDetections:2
+write file : decoded_result_<Base AI Model>.json
+....
+
+== 参考資料
+
+=== 格納されている自動生成コードに関する説明
+[NOTE]
+====
+生成時に利用したFBSファイルは、AITRIOS標準のフォーマットを元にオブジェクト定義を行っています。 +
+そのため、AITRIOS標準の出力推論結果に対してのみ利用できます。
+====
+
+srcディレクトリ下に格納されているコードは「Deserialize用のソースコードを自動生成する」項目のコマンドによって自動生成されたDeserializeコードを、サンプル動作させる修正を行ったコードです。 +
+そのため格納コードをそのままプロジェクトに組み込むことでDeserializeが行えます。 +
+
+==== 各関数で取得できるデータの説明
+==== Object Detection
+|===
+|関数名 |環境 |説明
+
+|ObjectDetectionListLength/objectDetectionListLength
+|Python/TypeScript
+|Serializeされたデータに含まれる推論結果の個数
+
+|ObjectDetectionList/objectDetectionList
+|Python/TypeScript
+|推論結果を要素に持つリスト
+
+|ClassId/classId
+|Python/TypeScript
+|推論結果のラベル
+
+|Score/score
+|Python/TypeScript
+|推論結果の確信度
+
+|Boundingbox2d/boundingbox2d
+|Python/TypeScript
+|検出した物体の画像上座標群
+
+|Left/left
+|Python/TypeScript
+|検出した物体位置の始点x座標
+
+|Top/top
+|Python/TypeScript
+|検出した物体位置の始点y座標
+
+|Right/right
+|Python/TypeScript
+|検出した物体位置の終点x座標
+
+|Bottom/bottom
+|Python/TypeScript
+|検出した物体位置の終点y座標
+|===
+==== Classification
+|===
+|関数名 |環境 |説明
+
+|ClassificationListLength/classificationListLength
+|Python/TypeScript
+|Serializeされたデータに含まれる推論結果の個数
+
+|ClassificationList/classificationList
+|Python/TypeScript
+|推論結果を要素に持つリスト
+
+|ClassId/classId
+|Python/TypeScript
+|推論結果のラベル
+
+|Score/score
+|Python/TypeScript
+|推論結果の確信度
+|===
+==== Segmentation
+|===
+|関数名 |環境 |説明
+
+|Height/height
+|Python/TypeScript
+|画像の縦の長さ(pixel)
+
+|Width/width
+|Python/TypeScript
+|画像の横の長さ(pixel)
+
+|classIdMap
+|TypeScript
+|画像の位置(pixel)
+
+|classIdMapLength
+|TypeScript
+|画像のピクセル数
+
+|ClassIdMapAsNumpy
+|Python
+|画像の位置情報を持つリスト
+
+|NumClassId/numClassId
+|Python/TypeScript
+|推論したオブェクトの個数
+
+|scoreMap
+|TypeScript
+|推論結果の確信度
+
+|scoreMapLength
+|TypeScript
+|推論結果のリストの長さ
+
+|ScoreMapAsNumpy
+|Python
+|推論結果の確信度を持つリスト
+
+|===
+== 備考・制限事項
+なし
