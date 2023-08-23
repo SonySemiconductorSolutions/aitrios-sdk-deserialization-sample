@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+ * Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { flatbuffers } from 'flatbuffers'
-import { SmartCamera } from '../../../src/TypeScript/ObjectDetection/ObjectdetectionGenerated'
+import * as flatbuffers from 'flatbuffers'
+import { SmartCamera } from '../../../src/TypeScript/ObjectDetection/objectdetection'
 import jsonFile from '../../ObjectDetection_encoded.json'
 
 const fs = require('fs')
@@ -33,12 +33,12 @@ type outputResult = {
 }
 
 type Inference = {
-    'C': number,
-    'P': number,
-    'X': number,
-    'Y': number,
-    'x': number,
-    'y': number
+    'class_id': number,
+    'score': number,
+    'left': number,
+    'top': number,
+    'right': number,
+    'bottom': number
 }
 
 function main () {
@@ -50,8 +50,8 @@ function main () {
     decodedData = Buffer.from(resultJson.Inferences[0].O, 'base64')
   } else {
     console.log('not inference result in this data')
-    if (fs.existsSync('./decoded_result_ObjectDetection.json')
-        && fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
+    if (fs.existsSync('./decoded_result_ObjectDetection.json') &&
+        fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
       console.log('Can\'t open symbolic link file.')
       return
     }
@@ -74,20 +74,20 @@ function main () {
     if (unionType === SmartCamera.BoundingBox.BoundingBox2d) {
       const bbox2d = objList.boundingBox(new SmartCamera.BoundingBox2d())
       const res : Inference = {
-        C: Number(objList.classId()),
-        P: Number(objList.score()),
-        X: Number(bbox2d.left()),
-        Y: Number(bbox2d.top()),
-        x: Number(bbox2d.right()),
-        y: Number(bbox2d.bottom())
+        class_id: Number(objList.classId()),
+        score: Math.round(Number(objList.score()) * 1000000) / 1000000,
+        left: Number(bbox2d.left()),
+        top: Number(bbox2d.top()),
+        right: Number(bbox2d.right()),
+        bottom: Number(bbox2d.bottom())
       }
       const inferenceKey = String(i + 1)
       resultJson.Inferences[0][inferenceKey] = res
     }
   }
 
-  if (fs.existsSync('./decoded_result_ObjectDetection.json')
-      && fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
+  if (fs.existsSync('./decoded_result_ObjectDetection.json') &&
+      fs.lstatSync('./decoded_result_ObjectDetection.json').isSymbolicLink()) {
     console.log('Can\'t open symbolic link file.')
     return
   }

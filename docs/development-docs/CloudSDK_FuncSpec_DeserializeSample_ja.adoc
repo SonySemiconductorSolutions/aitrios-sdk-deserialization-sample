@@ -13,9 +13,9 @@
 :lang: ja
 
 == 更新履歴
-[width="100%",options="header"]
+[width="100%", options="header"]
 |===
-|Date |What/Why
+|Date |What/Why 
 
 |2022/11/16
 |初版作成
@@ -24,19 +24,30 @@
 |表現統一 + 
 PDFビルド環境更新
 
+|2023/5/26
+|FlatBuffersバージョン更新対応 + 
+Semantic Segmentation追加対応
+
 |===
 
 == はじめに
 
 * 本書は、ユーザーに提供するDeserialize用のサンプルコード機能仕様書である。 +
 環境はPython/TypeScriptを対象とする。 +
-AIモデルはObject Detection/Classificationに対応する。 +
+AIモデルはObject Detection/Classification/Semantic Segmentationに対応する。 +
 なお、本環境下においてSerializeおよびDeserializeはFlatBuffersを利用していることとする。
+
 
 == 用語・略語
 [width="100%", cols="50%,50%",options="header"]
 |===
 |Terms/Abbreviations |Meaning 
+
+|「**Console Access Library**」
+|「**Console for AITRIOS**」へのアクセス方法を提供するSDK
+
+|「**Console for AITRIOS**」 (以下、「**Console**」と記載)
+|エッジからクラウドを含めたソリューションを効率的に導入するための各種機能（デプロイメント機能、リトレーニング機能、エッジAIデバイスマネジメント機能など）を提供するクラウドサービス
 
 |FlatBuffers
 |Google製のバイナリシリアライズフォーマット
@@ -62,13 +73,8 @@ AIモデルはObject Detection/Classificationに対応する。 +
 * FBSファイルを元に生成されたコードを使い、データをDeserializeする。
 
 === Under what condition
-* Linux環境があること。
-** Deserialize用コードの自動生成を行う場合に必要となる。
-** 開発時はDockerを利用し、Ubuntu 20.04のコンテナ環境にて実施する。
-* コードの自動生成時に使用する「FlatBuffers-compiler」のバージョンは1.11.0とする。
-* データのSerialize用コードを生成したFBSファイルを所持していること。
-** Deserialize用コードの自動生成を行う場合に必要となる。
-** Serialize時とオブジェクトの定義が共通している必要がある。
+* コードの自動生成を行う場合、FBSファイルを所持していること。
+** コードの自動生成時に使用するFlatBuffers-compilerのバージョンは23.1.21とする。
 
 === API
 * なし
