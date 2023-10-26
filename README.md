@@ -46,7 +46,7 @@ The source code stored in the repository supports Python and TypeScript.
 See the "Introduction" in the ["**Cloud SDK Deserialize Sample Tutorial**"](./docs/development-docs/CloudSDK_Tutorial_DeserializeSample.adoc) for details.
 
 ## Getting Started
-See the ["**SDK Getting Started**"](https://developer.aitrios.sony-semicon.com/en/file/download/sdk-getting-started/).
+See the ["**SDK Getting Started**"](https://developer.aitrios.sony-semicon.com/en/downloads#sdk-getting-started).
 
 ## Tutorials
 The tutorial explains how to generate automatically source code for deserialize and how to use the generated code.
