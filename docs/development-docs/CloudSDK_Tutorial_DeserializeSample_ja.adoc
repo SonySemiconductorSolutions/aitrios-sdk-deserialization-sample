@@ -29,13 +29,16 @@ PDFビルド環境更新
 
 |2023/5/26
 |FlatBuffersバージョン更新対応 + 
-Semantic Segmentation追加対応
+Semantic Segmentation追加対応 + 
+
+|2023/10/20
+|Semantic Segmentation用の「**Vision and Sensing Application**」サンプルコードの非公開化に伴うドキュメント修正
 
 |===
 
 == はじめに
 このチュートリアルでは、FlatBuffersを使用したDeserialize用のコード自動生成手順と、生成されたコードの利用方法について解説します。 +
-このチュートリアルでは以下のBase AI Modelをサポートしています。 +
+このチュートリアルでは以下のAI Modelをサポートしています。 +
 
 * Object Detection
 * Classification
@@ -187,7 +190,7 @@ FBSファイルからDeserialize用のソースコードを自動生成する手
 本ドキュメントのサンプルコードは、下記のFBSファイルを使用して生成しています。 +
 * link:https://github.com/SonySemiconductorSolutions/aitrios-sdk-vision-sensing-app/blob/main/tutorials/4_prepare_application/1_develop/sdk/schema/classification.fbs[classification.fbs]
 * link:https://github.com/SonySemiconductorSolutions/aitrios-sdk-vision-sensing-app/blob/main/tutorials/4_prepare_application/1_develop/sdk/schema/objectdetection.fbs[objectdetection.fbs]
-* link:https://github.com/SonySemiconductorSolutions/aitrios-sdk-vision-sensing-app/blob/main/tutorials/4_prepare_application/1_develop/sdk/schema/semantic_segmentation.fbs[semantic_segmentation.fbs]
+* semantic_segmentation.fbs (現在提供停止中)
 
 +
 FBSファイルの書き方は、公式ページ(https://google.github.io/flatbuffers/flatbuffers_guide_writing_schema.html[FlatBuffers:Writing_schema])を参照してください。 +
@@ -226,7 +229,7 @@ $ pip install Flatbuffers==23.1.21
 
 
 ====  自動生成されたPythonコードを使用する
-`**src/Python/ObjectDetection/decode.py**` の実装を例に、自動生成されたソースコードをPythonで使用する方法を説明します。 +
+`**sample/Python/ObjectDetection/decode.py**` の実装を例に、自動生成されたソースコードをPythonで使用する方法を説明します。 +
 
 ==== 1. 必要なソースコードをimportする
 [source,Python]
@@ -293,7 +296,7 @@ $ npm install flatbuffers@23.1.21
 FlatBuffersは自動生成されたDeserialize用のソースコードでimportしているため、事前にインストールをする必要があります。
 
 ====  自動生成されたTypeScriptコードを使用する
-`**src/TypeScript/ObjectDetection/decode.ts**` の実装を例に、自動生成されたソースコードをTypeScriptで使用する方法を説明します。 
+`**sample/TypeScript/ObjectDetection/decode.ts**` の実装を例に、自動生成されたソースコードをTypeScriptで使用する方法を説明します。 
 
 ==== 1. 必要なソースコードをimportする
 [source,TypeScript]
@@ -360,8 +363,8 @@ FBSファイルで定義された構造に沿ってオブジェクトを取得�
 
 == サンプルコードを実行する
 sampleディレクトリ以下に格納されているサンプルコードを利用することで、推論結果をDeserializeする挙動を確認できます。 +
-DeserializeするInput情報として、sample/ディレクトリ配下に `**<Base AI Model>_encoded.json**` が用意してあります。 +
-実行結果として `**decoded_result_<Base AI Model>.json**` のファイル名で、リポジトリのルートディレクトリにJSONファイルが生成されます。
+DeserializeするInput情報として、sample/ディレクトリ配下に `**<AI Model>_encoded.json**` が用意してあります。 +
+実行結果として `**decoded_result_<AI Model>.json**` のファイル名で、リポジトリのルートディレクトリにJSONファイルが生成されます。
 
 === Pythonのサンプルコードを実行する
 リポジトリのルートディレクトリで下記のコマンドを実行してください。
@@ -374,14 +377,14 @@ $ pip install -r sample/Python/requirements.txt
 . 実行コマンド
 +
 ....
-$ python sample/Python/<Base AI Model>/decode.py
+$ python sample/Python/<AI Model>/decode.py
 ....
 +
-コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<Base AI Model>.json**` が生成されます。 
+コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<AI Model>.json**` が生成されます。 
 +
 ....
 NumOfDetections:2
-write file : decoded_result_<Base AI Model>.json
+write file : decoded_result_<AI Model>.json
 ....
 
 === TypeScriptのサンプルコードを実行する
@@ -395,15 +398,15 @@ $ npm install
 . 実行コマンド
 +
 ....
-$ npm run <Base AI Model>
+$ npm run <AI Model>
 ....
 +
 
-コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<Base AI Model>.json**` が生成されます。
+コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<AI Model>.json**` が生成されます。
 +
 ....
 NumOfDetections:2
-write file : decoded_result_<Base AI Model>.json
+write file : decoded_result_<AI Model>.json
 ....
 
 == 参考資料
