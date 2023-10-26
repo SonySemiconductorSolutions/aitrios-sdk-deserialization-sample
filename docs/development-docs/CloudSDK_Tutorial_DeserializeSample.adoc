@@ -32,11 +32,14 @@ Updated the PDF build environment
 |Upgraded the version of FlatBuffers + 
 Added support for Semantic Segmentation
 
+|2023/10/20
+|Document fix due to unpublishing of the sample "**Vision and Sensing Application**" for Semantic Segmentation
+
 |===
 
 == Introduction
 This tutorial shows you how to automatically generate code for deserialize using FlatBuffers and how to use the generated code. + 
-The following Base AI Models are supported in this tutorial: + 
+The following AI Models are supported in this tutorial: + 
 
 * Object Detection
 * Classification
@@ -185,7 +188,7 @@ Provides the procedure to automatically generate source code for deserialize fro
 Save the target FBS file in any directory.The sample code in this document was generated using the following FBS file. +
 * link:https://github.com/SonySemiconductorSolutions/aitrios-sdk-vision-sensing-app/blob/main/tutorials/4_prepare_application/1_develop/sdk/schema/classification.fbs[classification.fbs]
 * link:https://github.com/SonySemiconductorSolutions/aitrios-sdk-vision-sensing-app/blob/main/tutorials/4_prepare_application/1_develop/sdk/schema/objectdetection.fbs[objectdetection.fbs]
-* link:https://github.com/SonySemiconductorSolutions/aitrios-sdk-vision-sensing-app/blob/main/tutorials/4_prepare_application/1_develop/sdk/schema/semantic_segmentation.fbs[semantic_segmentation.fbs]
+* semantic_segmentation.fbs (Currently not provided)
 
 +
 For instructions on how to write an FBS file, see the official page(https://google.github.io/flatbuffers/flatbuffers_guide_writing_schema.html[FlatBuffers:Writing_schema]). +
@@ -224,7 +227,7 @@ $ pip install Flatbuffers==23.1.21
 
 
 ====  Use auto-generated Python code
-Using the `**src/Python/ObjectDetection/decode.py**` implementation as an example, provides how to use automatically generated source code in Python. +
+Using the `**sample/Python/ObjectDetection/decode.py**` implementation as an example, provides how to use automatically generated source code in Python. +
 
 ==== 1. Import the necessary source code
 [source, Python]
@@ -291,7 +294,7 @@ $ npm install flatbuffers@23.1.21
 FlatBuffers is imported in the automatically generated source code for deserialize, so it must be installed beforehand.
 
 ====  Use auto-generated TypeScript code
-Using the `**src/TypeScript/ObjectDetection/decode.ts**` implementation as an example, provides how to use the automatically generated source code in TypeScript.
+Using the `**sample/TypeScript/ObjectDetection/decode.ts**` implementation as an example, provides how to use the automatically generated source code in TypeScript.
 
 ==== 1. Import the necessary source code
 [source, TypeScript]
@@ -358,8 +361,8 @@ The definition of function names, class names, and field names depends on the FB
 
 == Run the sample code
 You can see the behavior of deserializing the inference results by using the sample code stored under the sample directory. + 
-There is the `**<Base AI Model>_encoded.json**` under the sample/directory for the input information to deserialize. + 
-The result is a JSON file in the repository root directory with the filename `**decoded_result_<Base AI Model>.json**`.
+There is the `**<AI Model>_encoded.json**` under the sample/directory for the input information to deserialize. + 
+The result is a JSON file in the repository root directory with the filename `**decoded_result_<AI Model>.json**`.
 
 === Run the Python sample code
 Run the following command in the repository root directory.
@@ -372,14 +375,14 @@ $ pip install -r sample/Python/requirements.txt
 . Run the command
 +
 ....
-$ python sample/Python/<Base AI Model>/decode.py
+$ python sample/Python/<AI Model>/decode.py
 ....
 +
-After running the command, the terminal will display the following and produce a `**decoded_result_<Base AI Model>.json**` with deserialized information.
+After running the command, the terminal will display the following and produce a `**decoded_result_<AI Model>.json**` with deserialized information.
 +
 ....
 NumOfDetections:2
-write file : decoded_result_<Base AI Model>.json
+write file : decoded_result_<AI Model>.json
 ....
 
 === Run the TypeScript sample code
@@ -393,15 +396,15 @@ $ npm install
 . Run the command
 +
 ....
-$ npm run <Base AI Model>
+$ npm run <AI Model>
 ....
 +
 
-After running the command, the terminal will display the following and produce a `**decoded_result_<Base AI Model>.json**` with deserialized information.
+After running the command, the terminal will display the following and produce a `**decoded_result_<AI Model>.json**` with deserialized information.
 +
 ....
 NumOfDetections:2
-write file : decoded_result_<Base AI Model>.json
+write file : decoded_result_<AI Model>.json
 ....
 
 == Reference materials
