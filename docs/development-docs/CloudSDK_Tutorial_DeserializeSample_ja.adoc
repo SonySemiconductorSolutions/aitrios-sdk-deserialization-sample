@@ -24,7 +24,7 @@
 |誤記修正 + 
 表現統一 + 
 記法修正 + 
-「**Vision and Sensing Application SDK**」 ディレクトリ構成変更対応 + 
+「**Edge Application SDK**」 ディレクトリ構成変更対応 + 
 PDFビルド環境更新
 
 |2023/5/26
@@ -32,7 +32,7 @@ PDFビルド環境更新
 Semantic Segmentation追加対応 + 
 
 |2023/10/20
-|Semantic Segmentation用の「**Vision and Sensing Application**」サンプルコードの非公開化に伴うドキュメント修正
+|Semantic Segmentation用の「**Edge Application**」サンプルコードの非公開化に伴うドキュメント修正
 
 |===
 
@@ -58,6 +58,7 @@ PythonとTypeScriptで生成されたソースコードの利用方法につい�
 |FlatBuffers用のデータ構造を定義するファイル
 
 |===
+NOTE: 「**Edge Application**」と「**Vision and Sensing Application**」は同義です。
 
 == Deserializeリポジトリ構成
 Deserialize-sampleの動作環境は下記の通りです。
