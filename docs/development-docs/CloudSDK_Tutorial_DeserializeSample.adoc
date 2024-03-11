@@ -25,7 +25,7 @@
 |Fixed typos + 
 Unified the swinging of expressions + 
 Fixed the notation + 
-Followed the directory structure change of the "**Vision and Sensing Application SDK**" + 
+Followed the directory structure change of the "**Edge Application SDK**" + 
 Updated the PDF build environment
 
 |2023/5/26
@@ -33,7 +33,7 @@ Updated the PDF build environment
 Added support for Semantic Segmentation
 
 |2023/10/20
-|Document fix due to unpublishing of the sample "**Vision and Sensing Application**" for Semantic Segmentation
+|Document fix due to unpublishing of the sample "**Edge Application**" for Semantic Segmentation
 
 |===
 
@@ -59,6 +59,7 @@ For more languages supported by FlatBuffers, see the official page(https://googl
 |File which define data structure for FlatBuffers
 
 |===
+NOTE: "**Edge Applications**" and "**Vision and Sensing Application**" mean the same thing.
 
 == Deserialize Repository Configuration
 Operation environment for deserialize-sample is as follows. Omit parts that are not relevant to the implementation.
