@@ -80,7 +80,7 @@ It is assumed that FlatBuffers are used to serialize and deserialize in this env
 === How to start 
 * None
 
-== API parameters in each block
+== API parameters
 * None
 
 == Target performances/Impact on performances

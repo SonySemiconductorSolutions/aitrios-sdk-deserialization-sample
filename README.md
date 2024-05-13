@@ -23,7 +23,7 @@ Inference results gotten is encoded in Base64 and must be decoded before deseria
 ### Data conversion flow
 The flow for converting inference results gotten using the "**Console Access Library**" into a usable data format is as follows.
 
-- If the gotten inference results were output from "**PPL**"
+- If the gotten inference results were output from "**Edge Application**"
 
     1. Get inference results using the "**Console Access Library**"
     2. Decode in Base64
@@ -34,8 +34,8 @@ See the [Tutorials](#tutorials) for details of the procedure.
 ### Restrictions
 
 #### Target data for the tutorial
-The tutorial explains how to get inference results output from "**PPL**".<br>
-It does not cover how to get inference results output from "**non-PPL**".
+The tutorial explains how to get inference results output from "**Edge Application**".<br>
+It does not cover how to get inference results output without "**Edge Application**".
 
 #### Target environment for the tutorial
 How to generate the source code explained in the tutorial is for Linux environments only.
@@ -46,7 +46,7 @@ The source code stored in the repository supports Python and TypeScript.
 See the "Introduction" in the ["**Cloud SDK Deserialize Sample Tutorial**"](./docs/development-docs/CloudSDK_Tutorial_DeserializeSample.adoc) for details.
 
 ## Getting Started
-See the ["**SDK Getting Started**"](https://developer.aitrios.sony-semicon.com/en/downloads#sdk-getting-started).
+See the ["**SDK Getting Started**"](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/downloads#sdk-getting-started).
 
 ## Tutorials
 The tutorial explains how to generate automatically source code for deserialize and how to use the generated code.
@@ -58,7 +58,7 @@ See the ["**Cloud SDK Deserialize Sample Tutorial**"](./docs/development-docs/Cl
     - ["**Cloud SDK Deserialize Sample Functional Specifications**"](./docs/development-docs/CloudSDK_FuncSpec_DeserializeSample.adoc)
 
 ## Get support
-- [Contact us](https://developer.aitrios.sony-semicon.com/en/contact-us-en)
+- [Contact us](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/contact-us/)
 
 ## See also
 - [aitrios-sdk-console-access-lib-python](https://github.com/SonySemiconductorSolutions/aitrios-sdk-console-access-lib-python)
@@ -66,7 +66,7 @@ See the ["**Cloud SDK Deserialize Sample Tutorial**"](./docs/development-docs/Cl
 - ["**Developer Site**"](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/)
 
 ## Trademark
-- ["**Read This First**"](https://developer.aitrios.sony-semicon.com/en/documents/read-this-first)
+- ["**Read This First**"](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/documents/read-this-first/)
 
 ## Versioning
 
@@ -81,3 +81,9 @@ Each release is generated in the main branch. Pre-releases are generated in the 
 ## Security
 
 Before using Codespaces, please read the Site Policy of GitHub and understand the usage conditions. 
+
+This software is Beta version. Please note the following when using it.
+
+Regarding the use of Beta version:
+- Beta version is released with the assumption for use in development.
+- Beta version may contain errors or defects that obstruct regular operation of the Edge Device.
