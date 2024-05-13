@@ -39,7 +39,7 @@ Added support for Semantic Segmentation
 
 == Introduction
 This tutorial shows you how to automatically generate code for deserialize using FlatBuffers and how to use the generated code. + 
-The following AI Models are supported in this tutorial: + 
+The following AI models are supported in this tutorial: + 
 
 * Object Detection
 * Classification
@@ -59,7 +59,6 @@ For more languages supported by FlatBuffers, see the official page(https://googl
 |File which define data structure for FlatBuffers
 
 |===
-NOTE: "**Edge Applications**" and "**Vision and Sensing Application**" mean the same thing.
 
 == Deserialize Repository Configuration
 Operation environment for deserialize-sample is as follows. Omit parts that are not relevant to the implementation.
@@ -362,8 +361,8 @@ The definition of function names, class names, and field names depends on the FB
 
 == Run the sample code
 You can see the behavior of deserializing the inference results by using the sample code stored under the sample directory. + 
-There is the `**<AI Model>_encoded.json**` under the sample/directory for the input information to deserialize. + 
-The result is a JSON file in the repository root directory with the filename `**decoded_result_<AI Model>.json**`.
+There is the `**<AI model>_encoded.json**` under the sample/directory for the input information to deserialize. + 
+The result is a JSON file in the repository root directory with the filename `**decoded_result_<AI model>.json**`.
 
 === Run the Python sample code
 Run the following command in the repository root directory.
@@ -376,14 +375,14 @@ $ pip install -r sample/Python/requirements.txt
 . Run the command
 +
 ....
-$ python sample/Python/<AI Model>/decode.py
+$ python sample/Python/<AI model>/decode.py
 ....
 +
-After running the command, the terminal will display the following and produce a `**decoded_result_<AI Model>.json**` with deserialized information.
+After running the command, the terminal will display the following and produce a `**decoded_result_<AI model>.json**` with deserialized information.
 +
 ....
 NumOfDetections:2
-write file : decoded_result_<AI Model>.json
+write file : decoded_result_<AI model>.json
 ....
 
 === Run the TypeScript sample code
@@ -397,15 +396,15 @@ $ npm install
 . Run the command
 +
 ....
-$ npm run <AI Model>
+$ npm run <AI model>
 ....
 +
 
-After running the command, the terminal will display the following and produce a `**decoded_result_<AI Model>.json**` with deserialized information.
+After running the command, the terminal will display the following and produce a `**decoded_result_<AI model>.json**` with deserialized information.
 +
 ....
 NumOfDetections:2
-write file : decoded_result_<AI Model>.json
+write file : decoded_result_<AI model>.json
 ....
 
 == Reference materials

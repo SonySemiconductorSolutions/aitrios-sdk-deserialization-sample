@@ -27,7 +27,7 @@
 「**Edge Application SDK**」 ディレクトリ構成変更対応 + 
 PDFビルド環境更新
 
-|2023/5/26
+|2023/3/22
 |FlatBuffersバージョン更新対応 + 
 Semantic Segmentation追加対応 + 
 
@@ -38,7 +38,7 @@ Semantic Segmentation追加対応 +
 
 == はじめに
 このチュートリアルでは、FlatBuffersを使用したDeserialize用のコード自動生成手順と、生成されたコードの利用方法について解説します。 +
-このチュートリアルでは以下のAI Modelをサポートしています。 +
+このチュートリアルでは以下のAIモデルをサポートしています。 +
 
 * Object Detection
 * Classification
@@ -58,7 +58,6 @@ PythonとTypeScriptで生成されたソースコードの利用方法につい�
 |FlatBuffers用のデータ構造を定義するファイル
 
 |===
-NOTE: 「**Edge Application**」と「**Vision and Sensing Application**」は同義です。
 
 == Deserializeリポジトリ構成
 Deserialize-sampleの動作環境は下記の通りです。
@@ -364,8 +363,8 @@ FBSファイルで定義された構造に沿ってオブジェクトを取得�
 
 == サンプルコードを実行する
 sampleディレクトリ以下に格納されているサンプルコードを利用することで、推論結果をDeserializeする挙動を確認できます。 +
-DeserializeするInput情報として、sample/ディレクトリ配下に `**<AI Model>_encoded.json**` が用意してあります。 +
-実行結果として `**decoded_result_<AI Model>.json**` のファイル名で、リポジトリのルートディレクトリにJSONファイルが生成されます。
+DeserializeするInput情報として、sample/ディレクトリ配下に `**<AIモデル>_encoded.json**` が用意してあります。 +
+実行結果として `**decoded_result_<AIモデル>.json**` のファイル名で、リポジトリのルートディレクトリにJSONファイルが生成されます。
 
 === Pythonのサンプルコードを実行する
 リポジトリのルートディレクトリで下記のコマンドを実行してください。
@@ -378,14 +377,14 @@ $ pip install -r sample/Python/requirements.txt
 . 実行コマンド
 +
 ....
-$ python sample/Python/<AI Model>/decode.py
+$ python sample/Python/<AIモデル>/decode.py
 ....
 +
-コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<AI Model>.json**` が生成されます。 
+コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<AIモデル>.json**` が生成されます。 
 +
 ....
 NumOfDetections:2
-write file : decoded_result_<AI Model>.json
+write file : decoded_result_<AIモデル>.json
 ....
 
 === TypeScriptのサンプルコードを実行する
@@ -399,15 +398,15 @@ $ npm install
 . 実行コマンド
 +
 ....
-$ npm run <AI Model>
+$ npm run <AIモデル>
 ....
 +
 
-コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<AI Model>.json**` が生成されます。
+コマンド実行後にターミナルに下記が表示され、Deserializeされた情報が書き込まれた `**decoded_result_<AIモデル>.json**` が生成されます。
 +
 ....
 NumOfDetections:2
-write file : decoded_result_<AI Model>.json
+write file : decoded_result_<AIモデル>.json
 ....
 
 == 参考資料
