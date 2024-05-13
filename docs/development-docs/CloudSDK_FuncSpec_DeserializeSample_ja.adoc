@@ -15,7 +15,7 @@
 == 更新履歴
 [width="100%", options="header"]
 |===
-|Date |What/Why 
+|Date |What/Why
 
 |2022/11/16
 |初版作成
@@ -37,7 +37,6 @@ Semantic Segmentation追加対応
 AIモデルはObject Detection/Classification/Semantic Segmentationに対応する。 +
 なお、本環境下においてSerializeおよびDeserializeはFlatBuffersを利用していることとする。
 
-
 == 用語・略語
 [width="100%", cols="50%,50%",options="header"]
 |===
@@ -47,7 +46,7 @@ AIモデルはObject Detection/Classification/Semantic Segmentationに対応す�
 |「**Console for AITRIOS**」へのアクセス方法を提供するSDK
 
 |「**Console for AITRIOS**」 (以下、「**Console**」と記載)
-|エッジからクラウドを含めたソリューションを効率的に導入するための各種機能（デプロイメント機能、リトレーニング機能、エッジAIデバイスマネジメント機能など）を提供するクラウドサービス
+|エッジデバイスからクラウドを含めたソリューションを効率的に導入するための各種機能（デプロイメント機能、リトレーニング機能、エッジデバイスマネジメント機能など）を提供するクラウドサービス
 
 |FlatBuffers
 |Google製のバイナリシリアライズフォーマット
@@ -86,7 +85,7 @@ AIモデルはObject Detection/Classification/Semantic Segmentationに対応す�
 === How to start 
 * なし
 
-== 各BlockでのAPIパラメータ
+== APIパラメータ
 * なし
 
 == 目標性能

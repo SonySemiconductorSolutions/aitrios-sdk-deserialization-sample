@@ -1,6 +1,6 @@
 {
   "name": "deserialize",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "",
   "scripts": {
     "ObjectDetection": "./node_modules/.bin/ts-node sample/TypeScript/ObjectDetection/decode.ts",
